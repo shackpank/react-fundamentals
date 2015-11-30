@@ -126,7 +126,7 @@ const App = React.createClass({
         <Tabs ref="tabs" data={this.props.tabs} onTabChange={this.tabChanged} activeIndex={this.state.tabIndex} />
 
         <h2>The stateful one</h2>
-        <StatefulTabs ref="tabs" data={this.props.tabs} />
+        <StatefulTabs data={this.props.tabs} />
       </div>
     )
   }
