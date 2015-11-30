@@ -27,7 +27,7 @@ const DATA = {
 }
 
 const allItemTypes = DATA.items.reduce(function(all, one) {
-  if(all.indexOf(one) === -1) {
+  if(all.indexOf(one.type) === -1) {
     all.push(one.type);
   }
 
