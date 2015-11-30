@@ -49,29 +49,29 @@ const Tabs = React.createClass({
 
   getInitialState() {
     return {
-      currentCountry: this.props.data[0]
+      currentTab: this.props.data[0]
     }
   },
 
-  chooseCountry(countryName) {
+  changeTab(tab) {
     this.setState({
-      currentCountry: countryName
+      currentTab: tab
     })
   },
 
   render() {
     return (
       <div className="Tabs">
-        {this.props.data.map((country) => {
+        {this.props.data.map((tab) => {
           return (
-            <div className="Tab" onClick={this.chooseCountry.bind(this, country)} style={country === this.state.currentCountry ? styles.activeTab : styles.tab} key={country.id}>
-              {country.name}
+            <div className="Tab" onClick={this.changeTab.bind(this, tab)} style={tab === this.state.currentTab ? styles.activeTab : styles.tab} key={tab.id}>
+              {tab.name}
             </div>
           )
         })}
         <div className="TabPanel" style={styles.panel}>
-          {this.props.data.filter(country => ( country === this.state.currentCountry )).map( (country) => {
-            return <p>{country.description}</p>;
+          {this.props.data.filter(tab => ( tab === this.state.currentTab )).map( (tab) => {
+            return <p>{tab.description}</p>;
           })[0]}
         </div>
       </div>
