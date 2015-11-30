@@ -23,6 +23,8 @@ const DATA = {
     { id: 2, name: 'burrito', type: 'mexican' },
     { id: 3, name: 'tostada', type: 'mexican' },
     { id: 4, name: 'hush puppies', type: 'southern' },
+    { id: 5, name: 'fish and chips', type: 'british' },
+    { id: 6, name: 'full english', type: 'british' }
   ]
 }
 
