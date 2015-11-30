@@ -30,18 +30,49 @@ styles.panel = {
   padding: 10
 }
 
+
+const DATA = [
+  { id: 1, name: 'USA', description: 'Land of the Free, Home of the brave' },
+  { id: 2, name: 'Brazil', description: 'Sunshine, beaches, and Carnival' },
+  { id: 3, name: 'Russia', description: 'World Cup 2018!' },
+  { id: 4, name: 'UK', description: 'Current Location' }
+]
+
 const Tabs = React.createClass({
+  propTypes: {
+    data: React.PropTypes.arrayOf(React.PropTypes.shape({
+      id: React.PropTypes.number.isRequired,
+      name: React.PropTypes.string.isRequired,
+      description: React.PropTypes.string.isRequired
+    }))
+  },
+
+  getInitialState() {
+    return {
+      currentCountry: this.props.data[0]
+    }
+  },
+
+  chooseCountry(countryName) {
+    this.setState({
+      currentCountry: countryName
+    })
+  },
+
   render() {
     return (
       <div className="Tabs">
-        <div className="Tab" style={styles.activeTab}>
-          Active
-        </div>
-        <div className="Tab" style={styles.tab}>
-          Inactive
-        </div>
+        {this.props.data.map((country) => {
+          return (
+            <div className="Tab" onClick={this.chooseCountry.bind(this, country)} style={country === this.state.currentCountry ? styles.activeTab : styles.tab} key={country.id}>
+              {country.name}
+            </div>
+          )
+        })}
         <div className="TabPanel" style={styles.panel}>
-          Panel
+          {this.props.data.filter(country => ( country === this.state.currentCountry )).map( (country) => {
+            return <p>{country.description}</p>;
+          })[0]}
         </div>
       </div>
     )
@@ -59,11 +90,6 @@ const App = React.createClass({
   }
 })
 
-const DATA = [
-  { id: 1, name: 'USA', description: 'Land of the Free, Home of the brave' },
-  { id: 2, name: 'Brazil', description: 'Sunshine, beaches, and Carnival' },
-  { id: 3, name: 'Russia', description: 'World Cup 2018!' }
-]
 
 render(<App countries={DATA} />, document.getElementById('app'), function () {
   require('./tests').run(this)
