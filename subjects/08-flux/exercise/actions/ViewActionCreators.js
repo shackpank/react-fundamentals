@@ -9,3 +9,12 @@ export function loadContacts() {
 
   APIUtils.loadContacts()
 }
+
+export function deleteContact(contact) {
+  dispatchViewAction({
+    type: ActionTypes.DELETE_CONTACT,
+    contact
+  })
+
+  APIUtils.deleteContact(contact)
+}

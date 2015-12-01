@@ -37,4 +37,37 @@ AppDispatcher.register(function (payload) {
       contacts: action.contacts
     })
   }
+
+  if(action.type === ActionTypes.CONTACT_WAS_DELETED) {
+    setState({
+      loaded: true,
+      contacts: state.contacts.filter((contact) => contact.id !== payload.action.contact.id)
+    })
+  }
+
+  if(action.type === ActionTypes.CONTACT_DELETION_FAILED) {
+    setState({
+      loaded: true,
+      contacts: state.contacts.map((contact) => {
+        if(contact.id === payload.action.contact.id) {
+          contact.deletionFailureReason = payload.action.error.toString()
+        }
+
+        return contact
+      })
+    })
+  }
+
+  if(action.type === ActionTypes.DELETE_CONTACT) {
+    setState({
+      loaded: true,
+      contacts: state.contacts.map((contact) => {
+        if (contact.id === payload.action.contact.id) {
+          contact.deleting = true;
+        }
+
+        return contact
+      })
+    })
+  }
 })

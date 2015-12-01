@@ -23,17 +23,57 @@ const DATA = {
     { id: 2, name: 'burrito', type: 'mexican' },
     { id: 3, name: 'tostada', type: 'mexican' },
     { id: 4, name: 'hush puppies', type: 'southern' },
+    { id: 5, name: 'fish and chips', type: 'british' },
+    { id: 6, name: 'full english', type: 'british' }
   ]
 }
+
+const allItemTypes = DATA.items.reduce(function(all, one) {
+  if(all.indexOf(one.type) === -1) {
+    all.push(one.type);
+  }
+
+  return all;
+}, []);
+
+var sortReversed = false;
+var type = 'mexican';
 
 function Menu() {
   return (
     <div>
-      Open the console, you have failing tests
+      <h1>{DATA.title}</h1>
+      <ul>
+        {DATA.items.filter(function(item) {
+          return item.type === type;
+        }).sort(sortBy((sortReversed ? '-' : '') + 'name')).map(function(item) {
+          return <li key={item.id}>{item.name}</li>;
+        })}
+      </ul>
+      <select onChange={swapType}>
+        {allItemTypes.map(function(itemType) {
+          return <option key={itemType}>{itemType}</option>;
+        })}
+      </select>
+      <button onClick={swapSort}>swap sort order</button>
     </div>
   )
 }
 
-ReactDOM.render(<Menu />, document.getElementById('app'), function () {
+const swapSort = function() {
+  sortReversed = !sortReversed;
+  render();
+}
+
+const swapType = function(select) {
+  type = select.currentTarget.value;
+  render();
+}
+
+const render = function(test) {
+  ReactDOM.render(<Menu />, document.getElementById('app'), test || function() {});
+}
+
+render(function () {
   require('./tests').run()
-})
+});

@@ -12,10 +12,35 @@ import $ from 'jquery'
 import 'bootstrap-webpack'
 
 const Modal = React.createClass({
+  getDefaultProps() {
+    return {
+      isOpen: false
+    }
+  },
+
+  componentDidMount() {
+    this.showOrHideModal()
+  },
+
+  componentDidUpdate() {
+    this.showOrHideModal()
+  },
+
+  closeModal() {
+    this.props.onModalClosed()
+  },
+
+  showOrHideModal() {
+    if (this.props.isOpen) {
+      $(findDOMNode(this)).modal('show')
+    } else {
+      $(findDOMNode(this)).modal('hide')
+    }
+  },
 
   render() {
     return (
-      <div className="modal fade">
+      <div className="modal fade" data-backdrop="static">
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
@@ -23,6 +48,11 @@ const Modal = React.createClass({
             </div>
             <div className="modal-body">
               {this.props.children}
+              <button
+                onClick={this.closeModal}
+                type="button"
+                className="btn btn-default"
+              >Close</button>
             </div>
           </div>
         </div>
@@ -33,13 +63,22 @@ const Modal = React.createClass({
 })
 
 const App = React.createClass({
-
-  openModal() {
-    $(findDOMNode(this.refs.modal)).modal('show')
+  getInitialState() {
+    return {
+      modalIsOpen: true
+    }
   },
 
-  closeModal() {
-    $(findDOMNode(this.refs.modal)).modal('hide')
+  openModal() {
+    this.setState({
+      modalIsOpen: true
+    })
+  },
+
+  handleModalClosed() {
+    this.setState({
+      modalIsOpen: false
+    })
   },
 
   render() {
@@ -52,15 +91,12 @@ const App = React.createClass({
           onClick={this.openModal}
         >open modal</button>
 
-        <Modal ref="modal" title="Declarative is better">
+        <pre>{JSON.stringify(this.state, null, 2)}</pre>
+
+        <Modal ref="modal" title="Declarative is better" isOpen={this.state.modalIsOpen} onModalClosed={this.handleModalClosed}>
           <p>Calling methods on instances is a FLOW not a STOCK!</p>
           <p>It’s the dynamic process, not the static program in text space.</p>
           <p>You have to experience it over time, rather than in snapshots of state.</p>
-          <button
-            onClick={this.closeModal}
-            type="button"
-            className="btn btn-default"
-          >Close</button>
         </Modal>
 
       </div>
