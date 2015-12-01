@@ -26,6 +26,10 @@ const Modal = React.createClass({
     this.showOrHideModal()
   },
 
+  closeModal() {
+    this.props.onModalClosed()
+  },
+
   showOrHideModal() {
     if (this.props.isOpen) {
       $(findDOMNode(this)).modal('show')
@@ -44,6 +48,11 @@ const Modal = React.createClass({
             </div>
             <div className="modal-body">
               {this.props.children}
+              <button
+                onClick={this.closeModal}
+                type="button"
+                className="btn btn-default"
+              >Close</button>
             </div>
           </div>
         </div>
@@ -56,7 +65,7 @@ const Modal = React.createClass({
 const App = React.createClass({
   getInitialState() {
     return {
-      modalIsOpen: false
+      modalIsOpen: true
     }
   },
 
@@ -66,7 +75,7 @@ const App = React.createClass({
     })
   },
 
-  closeModal() {
+  handleModalClosed() {
     this.setState({
       modalIsOpen: false
     })
@@ -82,15 +91,10 @@ const App = React.createClass({
           onClick={this.openModal}
         >open modal</button>
 
-        <Modal ref="modal" title="Declarative is better" isOpen={this.state.modalIsOpen}>
+        <Modal ref="modal" title="Declarative is better" isOpen={this.state.modalIsOpen} onModalClosed={this.handleModalClosed}>
           <p>Calling methods on instances is a FLOW not a STOCK!</p>
           <p>It’s the dynamic process, not the static program in text space.</p>
           <p>You have to experience it over time, rather than in snapshots of state.</p>
-          <button
-            onClick={this.closeModal}
-            type="button"
-            className="btn btn-default"
-          >Close</button>
         </Modal>
 
       </div>
