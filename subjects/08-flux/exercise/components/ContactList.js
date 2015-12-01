@@ -34,7 +34,14 @@ const ContactList = React.createClass({
       return (
         <li key={contact.id}>
           <img src={contact.avatar} width="40" /> {contact.first} {contact.last}
-          <button onClick={this.deleteContact.bind(this, contact)}>delete</button>
+          {contact.deletionFailureReason ?
+            <span style={{ color: 'red', backgroundColor: 'black', border: '5px solid red', padding: '5px', marginLeft: '10px' }}>{contact.deletionFailureReason.toString()}</span>
+          :
+            contact.deleting ?
+              <button disabled>deleting...</button>
+            :
+              <button onClick={this.deleteContact.bind(this, contact)}>delete</button>
+          }
         </li>
       )
     })

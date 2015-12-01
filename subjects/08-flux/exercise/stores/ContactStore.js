@@ -44,4 +44,30 @@ AppDispatcher.register(function (payload) {
       contacts: state.contacts.filter((contact) => contact.id !== payload.action.contact.id)
     })
   }
+
+  if(action.type === ActionTypes.CONTACT_DELETION_FAILED) {
+    setState({
+      loaded: true,
+      contacts: state.contacts.map((contact) => {
+        if(contact.id === payload.action.contact.id) {
+          contact.deletionFailureReason = payload.action.error
+        }
+
+        return contact
+      })
+    })
+  }
+
+  if(action.type === ActionTypes.DELETE_CONTACT) {
+    setState({
+      loaded: true,
+      contacts: state.contacts.map((contact) => {
+        if (contact.id === payload.action.contact.id) {
+          contact.deleting = true;
+        }
+
+        return contact
+      })
+    })
+  }
 })

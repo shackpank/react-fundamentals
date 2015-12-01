@@ -14,3 +14,11 @@ export function contactWasDeleted(contact) {
     contact
   })
 }
+
+export function contactDeletionFailed(contact, error) {
+  dispatchServerAction({
+    type: ActionTypes.CONTACT_DELETION_FAILED,
+    contact,
+    error
+  })
+}
