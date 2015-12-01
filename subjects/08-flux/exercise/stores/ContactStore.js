@@ -37,4 +37,11 @@ AppDispatcher.register(function (payload) {
       contacts: action.contacts
     })
   }
+
+  if(action.type === ActionTypes.CONTACT_WAS_DELETED) {
+    setState({
+      loaded: true,
+      contacts: state.contacts.filter((contact) => contact.id !== payload.action.contact.id)
+    })
+  }
 })

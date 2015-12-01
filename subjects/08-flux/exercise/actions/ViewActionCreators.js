@@ -9,3 +9,7 @@ export function loadContacts() {
 
   APIUtils.loadContacts()
 }
+
+export function deleteContact(contact) {
+  APIUtils.deleteContact(contact)
+}

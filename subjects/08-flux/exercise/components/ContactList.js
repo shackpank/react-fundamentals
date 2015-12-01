@@ -1,14 +1,27 @@
 import React from 'react'
-import { getState, addChangeListener } from '../stores/ContactStore'
-import { loadContacts } from '../actions/ViewActionCreators'
+import { getState, addChangeListener, removeChangeListener } from '../stores/ContactStore'
+import { loadContacts, deleteContact } from '../actions/ViewActionCreators'
 
 const ContactList = React.createClass({
   getInitialState() {
     return getState()
   },
 
+  contactsChanged() {
+    this.setState(getState())
+  },
+
   componentDidMount() {
+    addChangeListener(this.contactsChanged)
     loadContacts()
+  },
+
+  componentWillUnmount() {
+    removeChangeListener(this.contactsChanged)
+  },
+
+  deleteContact(contact) {
+    deleteContact(contact)
   },
 
   render() {
@@ -21,6 +34,7 @@ const ContactList = React.createClass({
       return (
         <li key={contact.id}>
           <img src={contact.avatar} width="40" /> {contact.first} {contact.last}
+          <button onClick={this.deleteContact.bind(this, contact)}>delete</button>
         </li>
       )
     })

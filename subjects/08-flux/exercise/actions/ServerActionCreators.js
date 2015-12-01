@@ -7,3 +7,10 @@ export function contactsWereLoaded(contacts) {
     contacts
   })
 }
+
+export function contactWasDeleted(contact) {
+  dispatchServerAction({
+    type: ActionTypes.CONTACT_WAS_DELETED,
+    contact
+  })
+}
