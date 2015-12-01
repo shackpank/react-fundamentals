@@ -50,7 +50,7 @@ AppDispatcher.register(function (payload) {
       loaded: true,
       contacts: state.contacts.map((contact) => {
         if(contact.id === payload.action.contact.id) {
-          contact.deletionFailureReason = payload.action.error
+          contact.deletionFailureReason = payload.action.error.toString()
         }
 
         return contact
