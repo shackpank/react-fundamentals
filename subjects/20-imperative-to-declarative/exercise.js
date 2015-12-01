@@ -40,7 +40,7 @@ const Modal = React.createClass({
 
   render() {
     return (
-      <div className="modal fade">
+      <div className="modal fade" data-backdrop="static">
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
@@ -90,6 +90,8 @@ const App = React.createClass({
           className="btn btn-primary"
           onClick={this.openModal}
         >open modal</button>
+
+        <pre>{JSON.stringify(this.state, null, 2)}</pre>
 
         <Modal ref="modal" title="Declarative is better" isOpen={this.state.modalIsOpen} onModalClosed={this.handleModalClosed}>
           <p>Calling methods on instances is a FLOW not a STOCK!</p>
